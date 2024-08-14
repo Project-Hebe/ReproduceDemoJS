@@ -125,7 +125,7 @@ const loadQuizRecipe = async (videoId) => {
     .catch((error) => console.error('Error:', error))
 }
 const loadQuizType0 = async (videoId) => {
-  const url = hostURL + '/api/v1/quiz/generate_one_quiz'
+  const url = rootURL + '/api/v1/quiz/generate_one_quiz'
 
   const headers = {
     'Content-Type': 'application/json; charset=utf-8',
@@ -148,7 +148,7 @@ const loadQuizType0 = async (videoId) => {
     .catch((error) => console.error('Error:', error))
 }
 const loadQuizType1 = async (videoId) => {
-  const url = hostURL + '/api/v1/quiz/generate_one_quiz'
+  const url = rootURL + '/api/v1/quiz/generate_one_quiz'
 
   const headers = {
     'Content-Type': 'application/json; charset=utf-8',
@@ -171,7 +171,7 @@ const loadQuizType1 = async (videoId) => {
     .catch((error) => console.error('Error:', error))
 }
 const loadQuizType2 = async (videoId) => {
-  const url = hostURL + '/api/v1/quiz/echoing'
+  const url = rootURL + '/api/v1/quiz/echoing'
 
   const headers = {
     'Content-Type': 'application/json; charset=utf-8',
@@ -193,7 +193,7 @@ const loadQuizType2 = async (videoId) => {
     .catch((error) => console.error('Error:', error))
 }
 const loadQuizType3 = async (videoId) => {
-  const url = hostURL + '/api/v1/quiz/conversation'
+  const url = rootURL + '/api/v1/quiz/conversation'
 
   const headers = {
     'Content-Type': 'application/json; charset=utf-8',
