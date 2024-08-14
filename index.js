@@ -1,5 +1,18 @@
 const rootURL = 'http://178.128.80.88'
-const videoIds = ['zBZgdTb-dns', 'KR8za0ryYPM', 'D7G61D3owt0']
+
+const videoIds = [
+  'zBZgdTb-dns',
+  'KR8za0ryYPM',
+  'D7G61D3owt0',
+  'f_tG_Ol4lNo',
+  '3xe5dY87syg',
+  'azj3bfN74yo',
+  'JzPfMbG1vrE',
+  'C7OQHIpDlvA',
+  'Szox9wD4HRU',
+  'gYwvK8iK_SA',
+]
+
 let access_token = ''
 let firstPlayhead = 156398
 
@@ -15,15 +28,10 @@ const main = async () => {
 
   console.log('🚧 simulating user actions')
 
-  const _0 = videoIds[0]
-  enterVideoPage(_0)
-  await wait(2000)
-  const _1 = videoIds[1]
-  enterVideoPage(_1)
-  await wait(2000)
-  const _2 = videoIds[2]
-  enterVideoPage(_2)
-  await wait(2000)
+  for (const id of videoIds) {
+    await enterVideoPage(id)
+    await wait(2000)
+  }
 
   process.stdin.resume()
 }
@@ -54,6 +62,17 @@ const fetchToken = async () => {
       throw new Error(`HTTP error! status: ${response.status}`)
     }
 
+    if (response.status != 200) {
+      console.error('\n')
+      console.error('❌ Server Error')
+      console.error('http status:' + response.status)
+      console.error('http status text:' + response.statusText)
+      console.error('URL: ' + url.replace(rootURL + '/api/v1/', ''))
+      console.error('The response of our server is:')
+      console.error(await response.text())
+      console.error('\n')
+      return
+    }
     const data = await response.json()
     return data
   } catch (error) {
@@ -69,67 +88,115 @@ const enterVideoPage = async (videoId) => {
   loadQuizType1(videoId)
   loadQuizType2(videoId)
   loadQuizType3(videoId)
+  loadKnown()
+  loadUnknown()
 }
 
 const loadVideoInfo = async (videoId) => {
-  const url = rootURL + '/api/v1/videos/' + videoId + '?'
+  const url = `${rootURL}/api/v1/videos/${videoId}?`
 
   const headers = {
     'user-agent': 'Dart/3.4 (dart:io)',
     'content-type': 'application/json',
     'accept-encoding': 'gzip',
     'content-length': '0',
-    authorization: 'bearer ' + access_token,
+    authorization: `bearer ${access_token}`,
   }
 
-  fetch(url, {
-    method: 'GET',
-    headers: headers,
-  })
-    .then((response) => response.json())
-    // .then((data) => console.log(data))
-    .catch((error) => console.error('Error:', error))
+  try {
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: headers,
+    })
+
+    if (response.status != 200) {
+      console.error('\n')
+      console.error('❌ Server Error')
+      console.error('http status:' + response.status)
+      console.error('http status text:' + response.statusText)
+      console.error('URL: ' + url.replace(rootURL + '/api/v1/', ''))
+      console.error('The response of our server is:')
+      console.error(await response.text())
+      console.error('\n')
+      return
+    }
+    const data = await response.json()
+    console.log('')
+    console.log(`✅ ${url.replace(rootURL + '/api/v1/', '')}`)
+    console.log(videoId)
+    console.log(data)
+  } catch (error) {
+    console.error('Error:', error)
+  }
 }
+
 const loadVideoTranslation = async (videoId) => {
-  fetch(
-    rootURL + '/api/v1/videos/' + videoId + '/translate?target_language=ja',
-    {
+  const url = `${rootURL}/api/v1/videos/${videoId}/translate?target_language=ja`
+
+  try {
+    const response = await fetch(url, {
       method: 'GET',
       headers: {
         'content-type': 'application/json',
-        authorization: 'bearer ' + access_token,
+        authorization: `bearer ${access_token}`,
       },
+    })
+
+    if (response.status != 200) {
+      console.error('\n')
+      console.error('❌ Server Error')
+      console.error('http status:' + response.status)
+      console.error('http status text:' + response.statusText)
+      console.error('URL: ' + url.replace(rootURL + '/api/v1/', ''))
+      console.error('The response of our server is:')
+      console.error(await response.text())
+      console.error('\n')
+      return
     }
-  )
-    .then((response) => response.json())
-    .catch((error) => console.error('Error:', error))
+    const data = await response.json()
+    console.log('')
+    console.log(`✅ ${url.replace(rootURL + '/api/v1/', '')}`)
+    console.log(videoId)
+    console.log(data)
+  } catch (error) {
+    console.error('Error:', error)
+  }
 }
+
 const loadQuizRecipe = async (videoId) => {
-  const url = rootURL + '/api/v1/quiz/quiz_recipe'
+  const url = `${rootURL}/api/v1/quiz/quiz_recipe`
   const data = {
     video_id: videoId,
     playhead: firstPlayhead,
   }
 
-  fetch(url, {
-    method: 'POST',
-    headers: {
-      'user-agent': 'Dart/3.4 (dart:io)',
-      'content-type': 'application/json; charset=utf-8',
-      authorization: 'bearer ' + access_token,
-    },
-    body: JSON.stringify(data),
-  })
-    .then((response) => response.json())
-    .then((data) => console.log(data))
-    .catch((error) => console.error('Error:', error))
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'user-agent': 'Dart/3.4 (dart:io)',
+        'content-type': 'application/json; charset=utf-8',
+        authorization: `bearer ${access_token}`,
+      },
+      body: JSON.stringify(data),
+    })
+
+    const result = await response.json()
+    console.log('')
+    console.log(`✅ ${url.replace(rootURL + '/api/v1/', '')}`)
+    console.log(videoId)
+    console.log(result)
+  } catch (error) {
+    console.error('Error:', error)
+  }
 }
+
 const loadQuizType0 = async (videoId) => {
-  const url = rootURL + '/api/v1/quiz/generate_one_quiz'
+  const url = `${rootURL}/api/v1/quiz/generate_one_quiz`
 
   const headers = {
     'Content-Type': 'application/json; charset=utf-8',
-    authorization: 'bearer ' + access_token,
+    authorization: `bearer ${access_token}`,
   }
 
   const body = JSON.stringify({
@@ -138,21 +205,40 @@ const loadQuizType0 = async (videoId) => {
     type: 0,
   })
 
-  fetch(url, {
-    method: 'POST',
-    headers: headers,
-    body: body,
-  })
-    .then((response) => response.json())
-    .then((data) => console.log(data))
-    .catch((error) => console.error('Error:', error))
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: headers,
+      body: body,
+    })
+
+    if (response.status != 200) {
+      console.error('\n')
+      console.error('❌ Server Error')
+      console.error('http status:' + response.status)
+      console.error('http status text:' + response.statusText)
+      console.error('URL: ' + url.replace(rootURL + '/api/v1/', ''))
+      console.error('The response of our server is:')
+      console.error(await response.text())
+      console.error('\n')
+      return
+    }
+    const data = await response.json()
+    console.log('')
+    console.log(`✅ ${url.replace(rootURL + '/api/v1/', '')}`)
+    console.log(videoId)
+    console.log(data)
+  } catch (error) {
+    console.error('Error:', error)
+  }
 }
+
 const loadQuizType1 = async (videoId) => {
-  const url = rootURL + '/api/v1/quiz/generate_one_quiz'
+  const url = `${rootURL}/api/v1/quiz/generate_one_quiz`
 
   const headers = {
     'Content-Type': 'application/json; charset=utf-8',
-    authorization: 'bearer ' + access_token,
+    authorization: `bearer ${access_token}`,
   }
 
   const body = JSON.stringify({
@@ -161,21 +247,40 @@ const loadQuizType1 = async (videoId) => {
     type: 1,
   })
 
-  fetch(url, {
-    method: 'POST',
-    headers: headers,
-    body: body,
-  })
-    .then((response) => response.json())
-    .then((data) => console.log(data))
-    .catch((error) => console.error('Error:', error))
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: headers,
+      body: body,
+    })
+
+    if (response.status != 200) {
+      console.error('\n')
+      console.error('❌ Server Error')
+      console.error('http status:' + response.status)
+      console.error('http status text:' + response.statusText)
+      console.error('URL: ' + url.replace(rootURL + '/api/v1/', ''))
+      console.error('The response of our server is:')
+      console.error(await response.text())
+      console.error('\n')
+      return
+    }
+    const data = await response.json()
+    console.log('')
+    console.log(`✅ ${url.replace(rootURL + '/api/v1/', '')}`)
+    console.log(videoId)
+    console.log(data)
+  } catch (error) {
+    console.error('Error:', error)
+  }
 }
+
 const loadQuizType2 = async (videoId) => {
-  const url = rootURL + '/api/v1/quiz/echoing'
+  const url = `${rootURL}/api/v1/quiz/echoing`
 
   const headers = {
     'Content-Type': 'application/json; charset=utf-8',
-    authorization: 'bearer ' + access_token,
+    authorization: `bearer ${access_token}`,
   }
 
   const body = JSON.stringify({
@@ -183,21 +288,40 @@ const loadQuizType2 = async (videoId) => {
     playhead: firstPlayhead,
   })
 
-  fetch(url, {
-    method: 'POST',
-    headers: headers,
-    body: body,
-  })
-    .then((response) => response.json())
-    .then((data) => console.log(data))
-    .catch((error) => console.error('Error:', error))
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: headers,
+      body: body,
+    })
+
+    if (response.status != 200) {
+      console.error('\n')
+      console.error('❌ Server Error')
+      console.error('http status:' + response.status)
+      console.error('http status text:' + response.statusText)
+      console.error('URL: ' + url.replace(rootURL + '/api/v1/', ''))
+      console.error('The response of our server is:')
+      console.error(await response.text())
+      console.error('\n')
+      return
+    }
+    const data = await response.json()
+    console.log('')
+    console.log(`✅ ${url.replace(rootURL + '/api/v1/', '')}`)
+    console.log(videoId)
+    console.log(data)
+  } catch (error) {
+    console.error('Error:', error)
+  }
 }
+
 const loadQuizType3 = async (videoId) => {
-  const url = rootURL + '/api/v1/quiz/conversation'
+  const url = `${rootURL}/api/v1/quiz/conversation`
 
   const headers = {
     'Content-Type': 'application/json; charset=utf-8',
-    authorization: 'bearer ' + access_token,
+    authorization: `bearer ${access_token}`,
   }
 
   const body = JSON.stringify({
@@ -205,14 +329,106 @@ const loadQuizType3 = async (videoId) => {
     playhead: firstPlayhead,
   })
 
-  fetch(url, {
-    method: 'POST',
-    headers: headers,
-    body: body,
-  })
-    .then((response) => response.json())
-    .then((data) => console.log(data))
-    .catch((error) => console.error('Error:', error))
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: headers,
+      body: body,
+    })
+
+    if (response.status != 200) {
+      console.error('\n')
+      console.error('❌ Server Error')
+      console.error('http status:' + response.status)
+      console.error('http status text:' + response.statusText)
+      console.error('URL: ' + url.replace(rootURL + '/api/v1/', ''))
+      console.error('The response of our server is:')
+      console.error(await response.text())
+      console.error('\n')
+      return
+    }
+    const data = await response.json()
+    console.log('')
+    console.log(`✅ ${url.replace(rootURL + '/api/v1/', '')}`)
+    console.log(videoId)
+    console.log(data)
+  } catch (error) {
+    console.error('Error:', error)
+  }
+}
+
+const loadUnknown = async () => {
+  const url = `${rootURL}/api/v1/user-vocabularies/unknown`
+
+  const headers = {
+    'user-agent': 'Dart/3.4 (dart:io)',
+    'content-type': 'application/json',
+    'accept-encoding': 'gzip',
+    'content-length': '0',
+    authorization: `bearer ${access_token}`,
+  }
+
+  try {
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: headers,
+    })
+
+    if (response.status != 200) {
+      console.error('\n')
+      console.error('❌ Server Error')
+      console.error('http status:' + response.status)
+      console.error('http status text:' + response.statusText)
+      console.error('URL: ' + url.replace(rootURL + '/api/v1/', ''))
+      console.error('The response of our server is:')
+      console.error(await response.text())
+      console.error('\n')
+      return
+    }
+    const data = await response.json()
+    console.log('')
+    console.log(`✅ ${url.replace(rootURL + '/api/v1/', '')}`)
+    console.log(data)
+  } catch (error) {
+    console.error('Error:', error)
+  }
+}
+
+const loadKnown = async () => {
+  const url = `${rootURL}/api/v1/user-vocabularies/known`
+
+  const headers = {
+    'user-agent': 'Dart/3.4 (dart:io)',
+    'content-type': 'application/json',
+    'accept-encoding': 'gzip',
+    'content-length': '0',
+    authorization: `bearer ${access_token}`,
+  }
+
+  try {
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: headers,
+    })
+
+    if (response.status != 200) {
+      console.error('\n')
+      console.error('❌ Server Error')
+      console.error('http status:' + response.status)
+      console.error('http status text:' + response.statusText)
+      console.error('URL: ' + url.replace(rootURL + '/api/v1/', ''))
+      console.error('The response of our server is:')
+      console.error(await response.text())
+      console.error('\n')
+      return
+    }
+    const data = await response.json()
+    console.log('')
+    console.log(`✅ ${url.replace(rootURL + '/api/v1/', '')}`)
+    console.log(data)
+  } catch (error) {
+    console.error('Error:', error)
+  }
 }
 
 main()
