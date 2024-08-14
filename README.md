@@ -1,36 +1,5 @@
 # Reproduce Demo
 
-## 中文
-
-### 问题
-
-我们目前面临的问题是：
-
-我们的服务端存在严重的并发问题。延迟问题。代码执行错误问题。
-
-### 模拟
-
-这个 demo 用于模拟模拟用户在 app 端的操作
-
-你可以通过下面的三种不同的方式执行这段代码，建议使用 `vscode run and debug` 模式
-
-- `node ./index.js`
-- `yarn start`
-- vscode run and debug
-
-index.js 中的代码的执行逻辑如下：
-
-1. 模拟登录请求拿到 `access_token`
-2. 每两秒模拟一次用户进入某个视频播放页面的动作（`enterVideoPage`）
-3. 在视频播放页面模拟执行 7 个请求，分别为：
-   - 加载字幕
-   - 加载翻译
-   - 加载测试题权重
-   - 加载测试题类型 0
-   - 加载测试题类型 1
-   - 加载测试题类型 2
-   - 加载测试题类型 3
-
 ## English
 
 ### Problem
@@ -63,3 +32,34 @@ The execution logic of the code in index.js is as follows:
    - Load quiz type 1.
    - Load quiz type 2.
    - Load quiz type 3.
+
+## 中文
+
+### 问题
+
+我们目前面临的问题是：
+
+我们的服务端存在严重的并发问题。延迟问题。代码执行错误问题。
+
+### 模拟
+
+这个 demo 用于模拟模拟用户在 app 端的操作
+
+你可以通过下面的三种不同的方式执行这段代码，建议使用 `vscode run and debug` 模式
+
+- `node ./index.js`
+- `yarn start`
+- vscode run and debug
+
+index.js 中的代码的执行逻辑如下：
+
+1. 模拟登录请求拿到 `access_token`
+2. 每两秒模拟一次用户进入某个视频播放页面的动作（`enterVideoPage`）
+3. 在视频播放页面模拟执行 7 个请求，分别为：
+   - 加载字幕
+   - 加载翻译
+   - 加载测试题权重
+   - 加载测试题类型 0
+   - 加载测试题类型 1
+   - 加载测试题类型 2
+   - 加载测试题类型 3
