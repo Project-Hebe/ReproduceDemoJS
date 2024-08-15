@@ -108,6 +108,19 @@ const videoIds = !useMoreVideoToTest
       'wtz5WwXZh6w',
     ]
 
+const languageCodes = [
+  'en',
+  'zh-Hans',
+  'zh-Hant',
+  'ja',
+  'ko',
+  'de',
+  'es',
+  'fr',
+  'ru',
+  'ar',
+]
+
 let access_token = ''
 let firstPlayhead = 156398
 
@@ -146,6 +159,7 @@ const fetchToken = async () => {
   body.append('username', 'wangce@hebe.com')
   body.append('password', '12345678')
 
+  const startTime = Date.now()
   try {
     const response = await fetch(url, {
       method: 'POST',
@@ -165,13 +179,15 @@ const fetchToken = async () => {
       console.error('URL: ' + url.replace(rootURL + '/api/v1/', ''))
       console.error('The response of our server is:')
       console.error(await response.text())
-      console.error('\n')
       return
     }
     const data = await response.json()
     return data
   } catch (error) {
     console.error('Error:', error)
+  } finally {
+    const endTime = Date.now()
+    console.log(`🚧 Request duration: ${endTime - startTime}ms`)
   }
 }
 
@@ -191,13 +207,11 @@ const loadVideoInfo = async (videoId) => {
   const url = `${rootURL}/api/v1/videos/${videoId}?`
 
   const headers = {
-    'user-agent': 'Dart/3.4 (dart:io)',
     'content-type': 'application/json',
-    'accept-encoding': 'gzip',
-    'content-length': '0',
     authorization: `bearer ${access_token}`,
   }
 
+  const startTime = Date.now()
   try {
     const response = await fetch(url, {
       method: 'GET',
@@ -212,7 +226,6 @@ const loadVideoInfo = async (videoId) => {
       console.error('URL: ' + url.replace(rootURL + '/api/v1/', ''))
       console.error('The response of our server is:')
       console.error(await response.text())
-      console.error('\n')
       return
     }
     const data = await response.json()
@@ -222,12 +235,17 @@ const loadVideoInfo = async (videoId) => {
     console.log(data)
   } catch (error) {
     console.error('Error:', error)
+  } finally {
+    const endTime = Date.now()
+    console.log(`🚧 Request duration: ${endTime - startTime}ms`)
   }
 }
 
 const loadVideoTranslation = async (videoId) => {
-  const url = `${rootURL}/api/v1/videos/${videoId}/translate?target_language=ja`
+  const lCode = languageCodes[Math.floor(Math.random() * languageCodes.length)]
+  const url = `${rootURL}/api/v1/videos/${videoId}/translate?target_language=${lCode}`
 
+  const startTime = Date.now()
   try {
     const response = await fetch(url, {
       method: 'GET',
@@ -245,7 +263,6 @@ const loadVideoTranslation = async (videoId) => {
       console.error('URL: ' + url.replace(rootURL + '/api/v1/', ''))
       console.error('The response of our server is:')
       console.error(await response.text())
-      console.error('\n')
       return
     }
     const data = await response.json()
@@ -255,6 +272,9 @@ const loadVideoTranslation = async (videoId) => {
     console.log(data)
   } catch (error) {
     console.error('Error:', error)
+  } finally {
+    const endTime = Date.now()
+    console.log(`🚧 Request duration: ${endTime - startTime}ms`)
   }
 }
 
@@ -265,11 +285,11 @@ const loadQuizRecipe = async (videoId) => {
     playhead: firstPlayhead,
   }
 
+  const startTime = Date.now()
   try {
     const response = await fetch(url, {
       method: 'POST',
       headers: {
-        'user-agent': 'Dart/3.4 (dart:io)',
         'content-type': 'application/json; charset=utf-8',
         authorization: `bearer ${access_token}`,
       },
@@ -283,6 +303,9 @@ const loadQuizRecipe = async (videoId) => {
     console.log(result)
   } catch (error) {
     console.error('Error:', error)
+  } finally {
+    const endTime = Date.now()
+    console.log(`🚧 Request duration: ${endTime - startTime}ms`)
   }
 }
 
@@ -300,6 +323,7 @@ const loadQuizType0 = async (videoId) => {
     type: 0,
   })
 
+  const startTime = Date.now()
   try {
     const response = await fetch(url, {
       method: 'POST',
@@ -315,7 +339,6 @@ const loadQuizType0 = async (videoId) => {
       console.error('URL: ' + url.replace(rootURL + '/api/v1/', ''))
       console.error('The response of our server is:')
       console.error(await response.text())
-      console.error('\n')
       return
     }
     const data = await response.json()
@@ -325,6 +348,9 @@ const loadQuizType0 = async (videoId) => {
     console.log(data)
   } catch (error) {
     console.error('Error:', error)
+  } finally {
+    const endTime = Date.now()
+    console.log(`🚧 Request duration: ${endTime - startTime}ms`)
   }
 }
 
@@ -342,6 +368,7 @@ const loadQuizType1 = async (videoId) => {
     type: 1,
   })
 
+  const startTime = Date.now()
   try {
     const response = await fetch(url, {
       method: 'POST',
@@ -357,7 +384,6 @@ const loadQuizType1 = async (videoId) => {
       console.error('URL: ' + url.replace(rootURL + '/api/v1/', ''))
       console.error('The response of our server is:')
       console.error(await response.text())
-      console.error('\n')
       return
     }
     const data = await response.json()
@@ -367,6 +393,9 @@ const loadQuizType1 = async (videoId) => {
     console.log(data)
   } catch (error) {
     console.error('Error:', error)
+  } finally {
+    const endTime = Date.now()
+    console.log(`🚧 Request duration: ${endTime - startTime}ms`)
   }
 }
 
@@ -383,6 +412,7 @@ const loadQuizType2 = async (videoId) => {
     playhead: firstPlayhead,
   })
 
+  const startTime = Date.now()
   try {
     const response = await fetch(url, {
       method: 'POST',
@@ -398,7 +428,6 @@ const loadQuizType2 = async (videoId) => {
       console.error('URL: ' + url.replace(rootURL + '/api/v1/', ''))
       console.error('The response of our server is:')
       console.error(await response.text())
-      console.error('\n')
       return
     }
     const data = await response.json()
@@ -408,6 +437,9 @@ const loadQuizType2 = async (videoId) => {
     console.log(data)
   } catch (error) {
     console.error('Error:', error)
+  } finally {
+    const endTime = Date.now()
+    console.log(`🚧 Request duration: ${endTime - startTime}ms`)
   }
 }
 
@@ -424,6 +456,7 @@ const loadQuizType3 = async (videoId) => {
     playhead: firstPlayhead,
   })
 
+  const startTime = Date.now()
   try {
     const response = await fetch(url, {
       method: 'POST',
@@ -439,7 +472,6 @@ const loadQuizType3 = async (videoId) => {
       console.error('URL: ' + url.replace(rootURL + '/api/v1/', ''))
       console.error('The response of our server is:')
       console.error(await response.text())
-      console.error('\n')
       return
     }
     const data = await response.json()
@@ -449,6 +481,9 @@ const loadQuizType3 = async (videoId) => {
     console.log(data)
   } catch (error) {
     console.error('Error:', error)
+  } finally {
+    const endTime = Date.now()
+    console.log(`🚧 Request duration: ${endTime - startTime}ms`)
   }
 }
 
@@ -456,13 +491,11 @@ const loadUnknown = async () => {
   const url = `${rootURL}/api/v1/user-vocabularies/unknown`
 
   const headers = {
-    'user-agent': 'Dart/3.4 (dart:io)',
     'content-type': 'application/json',
-    'accept-encoding': 'gzip',
-    'content-length': '0',
     authorization: `bearer ${access_token}`,
   }
 
+  const startTime = Date.now()
   try {
     const response = await fetch(url, {
       method: 'GET',
@@ -477,7 +510,6 @@ const loadUnknown = async () => {
       console.error('URL: ' + url.replace(rootURL + '/api/v1/', ''))
       console.error('The response of our server is:')
       console.error(await response.text())
-      console.error('\n')
       return
     }
     const data = await response.json()
@@ -486,6 +518,9 @@ const loadUnknown = async () => {
     console.log(data)
   } catch (error) {
     console.error('Error:', error)
+  } finally {
+    const endTime = Date.now()
+    console.log(`🚧 Request duration: ${endTime - startTime}ms`)
   }
 }
 
@@ -493,13 +528,11 @@ const loadKnown = async () => {
   const url = `${rootURL}/api/v1/user-vocabularies/known`
 
   const headers = {
-    'user-agent': 'Dart/3.4 (dart:io)',
     'content-type': 'application/json',
-    'accept-encoding': 'gzip',
-    'content-length': '0',
     authorization: `bearer ${access_token}`,
   }
 
+  const startTime = Date.now()
   try {
     const response = await fetch(url, {
       method: 'GET',
@@ -514,7 +547,6 @@ const loadKnown = async () => {
       console.error('URL: ' + url.replace(rootURL + '/api/v1/', ''))
       console.error('The response of our server is:')
       console.error(await response.text())
-      console.error('\n')
       return
     }
     const data = await response.json()
@@ -523,6 +555,9 @@ const loadKnown = async () => {
     console.log(data)
   } catch (error) {
     console.error('Error:', error)
+  } finally {
+    const endTime = Date.now()
+    console.log(`🚧 Request duration: ${endTime - startTime}ms`)
   }
 }
 
