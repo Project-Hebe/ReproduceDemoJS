@@ -2,7 +2,7 @@ const rootURL = 'http://178.128.80.88'
 
 const useMoreVideoToTest = false
 
-const videoIds = !useMoreVideoToTest
+const videoIdsInOurSystem = !useMoreVideoToTest
   ? [
       'zBZgdTb-dns',
       'KR8za0ryYPM',
@@ -136,7 +136,7 @@ const main = async () => {
 
   console.log('🚧 simulating user actions')
 
-  for (const id of videoIds) {
+  for (const id of videoIdsInOurSystem) {
     await enterVideoPage(id)
     await wait(Math.floor(Math.random() * 4000) + 1)
   }
