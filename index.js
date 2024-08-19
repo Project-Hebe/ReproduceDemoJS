@@ -1,4 +1,4 @@
-const rootURL = 'http://178.128.80.88'
+const rootURL = 'https://api.jolii.app'
 
 const useMoreVideoToTest = false
 
@@ -192,18 +192,18 @@ const fetchToken = async () => {
 }
 
 const enterVideoPage = async (videoId) => {
-  loadVideoInfo(videoId)
-  loadVideoTranslation(videoId)
-  loadQuizRecipe(videoId)
-  loadQuizType0(videoId)
-  loadQuizType1(videoId)
+  // loadVideoInfoAndTranscript(videoId)
+  // loadVideoTranslation(videoId)
+  // loadQuizRecipe(videoId)
+  // loadQuizType0(videoId)
+  // loadQuizType1(videoId)
   loadQuizType2(videoId)
   loadQuizType3(videoId)
-  loadKnown()
-  loadUnknown()
+  // loadKnown()
+  // loadUnknown()
 }
 
-const loadVideoInfo = async (videoId) => {
+const loadVideoInfoAndTranscript = async (videoId) => {
   const url = `${rootURL}/api/v1/videos/${videoId}?`
 
   const headers = {
