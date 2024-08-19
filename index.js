@@ -1,6 +1,10 @@
 const rootURL = 'https://api.jolii.app'
 
-const useMoreVideoToTest = false
+const useMoreVideoToTest = true
+
+let totalLatency = 0
+let averageLatency = 0
+let finishedRequestCount = 0
 
 const videoIdsInOurSystem = !useMoreVideoToTest
   ? [
@@ -178,7 +182,9 @@ const fetchToken = async () => {
       console.error('http status text:' + response.statusText)
       console.error('URL: ' + url.replace(rootURL + '/api/v1/', ''))
       console.error('The response of our server is:')
-      console.error(await response.text())
+      let text = await response.text()
+      if (text.length > 20) text = text.substring(0, 20) + '...'
+      console.error(text)
       return
     }
     const data = await response.json()
@@ -187,7 +193,14 @@ const fetchToken = async () => {
     console.error('Error:', error)
   } finally {
     const endTime = Date.now()
-    console.log(`🚧 Request duration: ${endTime - startTime}ms`)
+    finishedRequestCount += 1
+    totalLatency += endTime - startTime
+    averageLatency = totalLatency / finishedRequestCount
+    console.log(
+      `🚧 Request duration: ${endTime - startTime}ms` +
+        '  ⏰ Average Latency: ' +
+        averageLatency
+    )
   }
 }
 
@@ -199,8 +212,8 @@ const enterVideoPage = async (videoId) => {
   // loadQuizType1(videoId)
   loadQuizType2(videoId)
   loadQuizType3(videoId)
-  // loadKnown()
-  // loadUnknown()
+  // loadKnown(videoId)
+  // loadUnknown(videoId)
 }
 
 const loadVideoInfoAndTranscript = async (videoId) => {
@@ -225,19 +238,27 @@ const loadVideoInfoAndTranscript = async (videoId) => {
       console.error('http status text:' + response.statusText)
       console.error('URL: ' + url.replace(rootURL + '/api/v1/', ''))
       console.error('The response of our server is:')
-      console.error(await response.text())
+      let text = await response.text()
+      if (text.length > 20) text = text.substring(0, 20) + '...'
+      console.error(text)
       return
     }
     const data = await response.json()
     console.log('')
-    console.log(`✅ ${url.replace(rootURL + '/api/v1/', '')}`)
-    console.log(videoId)
+    console.log(`✅ ${url.replace(rootURL + '/api/v1/', '')}` + ' : ' + videoId)
     console.log(data)
   } catch (error) {
     console.error('Error:', error)
   } finally {
+    finishedRequestCount += 1
+    averageLatency = totalLatency / finishedRequestCount
     const endTime = Date.now()
-    console.log(`🚧 Request duration: ${endTime - startTime}ms`)
+    totalLatency += endTime - startTime
+    console.log(
+      `🚧 Request duration: ${endTime - startTime}ms` +
+        '  ⏰ Average Latency: ' +
+        averageLatency
+    )
   }
 }
 
@@ -262,19 +283,27 @@ const loadVideoTranslation = async (videoId) => {
       console.error('http status text:' + response.statusText)
       console.error('URL: ' + url.replace(rootURL + '/api/v1/', ''))
       console.error('The response of our server is:')
-      console.error(await response.text())
+      let text = await response.text()
+      if (text.length > 20) text = text.substring(0, 20) + '...'
+      console.error(text)
       return
     }
     const data = await response.json()
     console.log('')
-    console.log(`✅ ${url.replace(rootURL + '/api/v1/', '')}`)
-    console.log(videoId)
+    console.log(`✅ ${url.replace(rootURL + '/api/v1/', '')}` + ' : ' + videoId)
     console.log(data)
   } catch (error) {
     console.error('Error:', error)
   } finally {
+    finishedRequestCount += 1
+    averageLatency = totalLatency / finishedRequestCount
     const endTime = Date.now()
-    console.log(`🚧 Request duration: ${endTime - startTime}ms`)
+    totalLatency += endTime - startTime
+    console.log(
+      `🚧 Request duration: ${endTime - startTime}ms` +
+        '  ⏰ Average Latency: ' +
+        averageLatency
+    )
   }
 }
 
@@ -298,14 +327,20 @@ const loadQuizRecipe = async (videoId) => {
 
     const result = await response.json()
     console.log('')
-    console.log(`✅ ${url.replace(rootURL + '/api/v1/', '')}`)
-    console.log(videoId)
+    console.log(`✅ ${url.replace(rootURL + '/api/v1/', '')}` + ' : ' + videoId)
     console.log(result)
   } catch (error) {
     console.error('Error:', error)
   } finally {
+    finishedRequestCount += 1
+    averageLatency = totalLatency / finishedRequestCount
     const endTime = Date.now()
-    console.log(`🚧 Request duration: ${endTime - startTime}ms`)
+    totalLatency += endTime - startTime
+    console.log(
+      `🚧 Request duration: ${endTime - startTime}ms` +
+        '  ⏰ Average Latency: ' +
+        averageLatency
+    )
   }
 }
 
@@ -338,19 +373,27 @@ const loadQuizType0 = async (videoId) => {
       console.error('http status text:' + response.statusText)
       console.error('URL: ' + url.replace(rootURL + '/api/v1/', ''))
       console.error('The response of our server is:')
-      console.error(await response.text())
+      let text = await response.text()
+      if (text.length > 20) text = text.substring(0, 20) + '...'
+      console.error(text)
       return
     }
     const data = await response.json()
     console.log('')
-    console.log(`✅ ${url.replace(rootURL + '/api/v1/', '')}`)
-    console.log(videoId)
+    console.log(`✅ ${url.replace(rootURL + '/api/v1/', '')}` + ' : ' + videoId)
     console.log(data)
   } catch (error) {
     console.error('Error:', error)
   } finally {
+    finishedRequestCount += 1
+    averageLatency = totalLatency / finishedRequestCount
     const endTime = Date.now()
-    console.log(`🚧 Request duration: ${endTime - startTime}ms`)
+    totalLatency += endTime - startTime
+    console.log(
+      `🚧 Request duration: ${endTime - startTime}ms` +
+        '  ⏰ Average Latency: ' +
+        averageLatency
+    )
   }
 }
 
@@ -383,19 +426,27 @@ const loadQuizType1 = async (videoId) => {
       console.error('http status text:' + response.statusText)
       console.error('URL: ' + url.replace(rootURL + '/api/v1/', ''))
       console.error('The response of our server is:')
-      console.error(await response.text())
+      let text = await response.text()
+      if (text.length > 20) text = text.substring(0, 20) + '...'
+      console.error(text)
       return
     }
     const data = await response.json()
     console.log('')
-    console.log(`✅ ${url.replace(rootURL + '/api/v1/', '')}`)
-    console.log(videoId)
+    console.log(`✅ ${url.replace(rootURL + '/api/v1/', '')}` + ' : ' + videoId)
     console.log(data)
   } catch (error) {
     console.error('Error:', error)
   } finally {
+    finishedRequestCount += 1
+    averageLatency = totalLatency / finishedRequestCount
     const endTime = Date.now()
-    console.log(`🚧 Request duration: ${endTime - startTime}ms`)
+    totalLatency += endTime - startTime
+    console.log(
+      `🚧 Request duration: ${endTime - startTime}ms` +
+        '  ⏰ Average Latency: ' +
+        averageLatency
+    )
   }
 }
 
@@ -427,19 +478,27 @@ const loadQuizType2 = async (videoId) => {
       console.error('http status text:' + response.statusText)
       console.error('URL: ' + url.replace(rootURL + '/api/v1/', ''))
       console.error('The response of our server is:')
-      console.error(await response.text())
+      let text = await response.text()
+      if (text.length > 20) text = text.substring(0, 20) + '...'
+      console.error(text)
       return
     }
     const data = await response.json()
     console.log('')
-    console.log(`✅ ${url.replace(rootURL + '/api/v1/', '')}`)
-    console.log(videoId)
+    console.log(`✅ ${url.replace(rootURL + '/api/v1/', '')}` + ' : ' + videoId)
     console.log(data)
   } catch (error) {
     console.error('Error:', error)
   } finally {
+    finishedRequestCount += 1
+    averageLatency = totalLatency / finishedRequestCount
     const endTime = Date.now()
-    console.log(`🚧 Request duration: ${endTime - startTime}ms`)
+    totalLatency += endTime - startTime
+    console.log(
+      `🚧 Request duration: ${endTime - startTime}ms` +
+        '  ⏰ Average Latency: ' +
+        averageLatency
+    )
   }
 }
 
@@ -471,23 +530,31 @@ const loadQuizType3 = async (videoId) => {
       console.error('http status text:' + response.statusText)
       console.error('URL: ' + url.replace(rootURL + '/api/v1/', ''))
       console.error('The response of our server is:')
-      console.error(await response.text())
+      let text = await response.text()
+      if (text.length > 20) text = text.substring(0, 20) + '...'
+      console.error(text)
       return
     }
     const data = await response.json()
     console.log('')
-    console.log(`✅ ${url.replace(rootURL + '/api/v1/', '')}`)
-    console.log(videoId)
+    console.log(`✅ ${url.replace(rootURL + '/api/v1/', '')}` + ' : ' + videoId)
     console.log(data)
   } catch (error) {
     console.error('Error:', error)
   } finally {
+    finishedRequestCount += 1
+    averageLatency = totalLatency / finishedRequestCount
     const endTime = Date.now()
-    console.log(`🚧 Request duration: ${endTime - startTime}ms`)
+    totalLatency += endTime - startTime
+    console.log(
+      `🚧 Request duration: ${endTime - startTime}ms` +
+        '  ⏰ Average Latency: ' +
+        averageLatency
+    )
   }
 }
 
-const loadUnknown = async () => {
+const loadUnknown = async (videoId) => {
   const url = `${rootURL}/api/v1/user-vocabularies/unknown`
 
   const headers = {
@@ -509,22 +576,30 @@ const loadUnknown = async () => {
       console.error('http status text:' + response.statusText)
       console.error('URL: ' + url.replace(rootURL + '/api/v1/', ''))
       console.error('The response of our server is:')
-      console.error(await response.text())
+      let text = await response.text()
+      if (text.length > 20) text = text.substring(0, 20) + '...'
+      console.error(text)
       return
     }
     const data = await response.json()
     console.log('')
-    console.log(`✅ ${url.replace(rootURL + '/api/v1/', '')}`)
-    console.log(data)
+    console.log(`✅ ${url.replace(rootURL + '/api/v1/', '')}` + ' : ' + videoId)
   } catch (error) {
     console.error('Error:', error)
   } finally {
+    finishedRequestCount += 1
+    averageLatency = totalLatency / finishedRequestCount
     const endTime = Date.now()
-    console.log(`🚧 Request duration: ${endTime - startTime}ms`)
+    totalLatency += endTime - startTime
+    console.log(
+      `🚧 Request duration: ${endTime - startTime}ms` +
+        '  ⏰ Average Latency: ' +
+        averageLatency
+    )
   }
 }
 
-const loadKnown = async () => {
+const loadKnown = async (videoId) => {
   const url = `${rootURL}/api/v1/user-vocabularies/known`
 
   const headers = {
@@ -546,18 +621,26 @@ const loadKnown = async () => {
       console.error('http status text:' + response.statusText)
       console.error('URL: ' + url.replace(rootURL + '/api/v1/', ''))
       console.error('The response of our server is:')
-      console.error(await response.text())
+      let text = await response.text()
+      if (text.length > 20) text = text.substring(0, 20) + '...'
+      console.error(text)
       return
     }
     const data = await response.json()
     console.log('')
-    console.log(`✅ ${url.replace(rootURL + '/api/v1/', '')}`)
-    console.log(data)
+    console.log(`✅ ${url.replace(rootURL + '/api/v1/', '')}` + ' : ' + videoId)
   } catch (error) {
     console.error('Error:', error)
   } finally {
+    finishedRequestCount += 1
+    averageLatency = totalLatency / finishedRequestCount
     const endTime = Date.now()
-    console.log(`🚧 Request duration: ${endTime - startTime}ms`)
+    totalLatency += endTime - startTime
+    console.log(
+      `🚧 Request duration: ${endTime - startTime}ms` +
+        '  ⏰ Average Latency: ' +
+        averageLatency
+    )
   }
 }
 
