@@ -142,7 +142,7 @@ const main = async () => {
 
   for (const id of videoIdsInOurSystem) {
     await enterVideoPage(id)
-    await wait(Math.floor(Math.random() * 4000) + 1)
+    await wait(Math.floor(Math.random() * 20000) + 1)
   }
 
   process.stdin.resume()
