@@ -523,7 +523,7 @@ const fetchToken = async () => {
       console.error('❌ Server Error')
       console.error('http status:' + response.status)
       console.error('http status text:' + response.statusText)
-      console.error('URL: ' + url.replace(rootURL + '/api/v1/', ''))
+      console.error('URL: ' + url.replace(rootURL + '/api/v1/', '') + videoId)
       console.error('The response of our server is:')
       let text = await response.text()
       if (text.length > 20) text = text.substring(0, 20) + '...'
@@ -591,7 +591,7 @@ const genQuizByGivenType = async (videoId, type) => {
       console.error('❌ Server Error')
       console.error('http status:' + response.status)
       console.error('http status text:' + response.statusText)
-      console.error('URL: ' + url.replace(rootURL + '/api/v1/', ''))
+      console.error('URL: ' + url.replace(rootURL + '/api/v1/', '') + videoId)
       console.error('The response of our server is:')
       let text = await response.text()
       if (text.length > 20) text = text.substring(0, 20) + '...'
@@ -638,7 +638,7 @@ const loadVideoInfoAndTranscript = async (videoId) => {
       console.error('❌ Server Error')
       console.error('http status:' + response.status)
       console.error('http status text:' + response.statusText)
-      console.error('URL: ' + url.replace(rootURL + '/api/v1/', ''))
+      console.error('URL: ' + url.replace(rootURL + '/api/v1/', '') + videoId)
       console.error('The response of our server is:')
       let text = await response.text()
       if (text.length > 20) text = text.substring(0, 20) + '...'
@@ -684,7 +684,7 @@ const loadVideoTranslation = async (videoId) => {
       console.error('❌ Server Error')
       console.error('http status:' + response.status)
       console.error('http status text:' + response.statusText)
-      console.error('URL: ' + url.replace(rootURL + '/api/v1/', ''))
+      console.error('URL: ' + url.replace(rootURL + '/api/v1/', '') + videoId)
       console.error('The response of our server is:')
       let text = await response.text()
       if (text.length > 20) text = text.substring(0, 20) + '...'
@@ -777,7 +777,7 @@ const loadQuizType0or1 = async (videoId, type) => {
       console.error('body:' + body)
       console.error('http status:' + response.status)
       console.error('http status text:' + response.statusText)
-      console.error('URL: ' + url.replace(rootURL + '/api/v1/', ''))
+      console.error('URL: ' + url.replace(rootURL + '/api/v1/', '') + videoId)
       console.error('The response of our server is:')
       let text = await response.text()
       if (text.length > 20) text = text.substring(0, 20) + '...'
@@ -792,7 +792,7 @@ const loadQuizType0or1 = async (videoId, type) => {
       console.error('body:' + body)
       console.error('http status:' + response.status)
       console.error('http status text:' + response.statusText)
-      console.error('URL: ' + url.replace(rootURL + '/api/v1/', ''))
+      console.error('URL: ' + url.replace(rootURL + '/api/v1/', '') + videoId)
       console.error('The response of our server is:')
       console.error(data)
       return
@@ -845,7 +845,7 @@ const loadQuizType1 = async (videoId) => {
       console.error('body:' + body)
       console.error('http status:' + response.status)
       console.error('http status text:' + response.statusText)
-      console.error('URL: ' + url.replace(rootURL + '/api/v1/', ''))
+      console.error('URL: ' + url.replace(rootURL + '/api/v1/', '') + videoId)
       console.error('The response of our server is:')
       let text = await response.text()
       if (text.length > 20) text = text.substring(0, 20) + '...'
@@ -898,7 +898,7 @@ const loadQuizType2 = async (videoId) => {
       console.error('❌ Server Error')
       console.error('http status:' + response.status)
       console.error('http status text:' + response.statusText)
-      console.error('URL: ' + url.replace(rootURL + '/api/v1/', ''))
+      console.error('URL: ' + url.replace(rootURL + '/api/v1/', '') + videoId)
       console.error('The response of our server is:')
       let text = await response.text()
       if (text.length > 20) text = text.substring(0, 20) + '...'
@@ -951,7 +951,7 @@ const loadQuizType3 = async (videoId) => {
       console.error('❌ Server Error')
       console.error('http status:' + response.status)
       console.error('http status text:' + response.statusText)
-      console.error('URL: ' + url.replace(rootURL + '/api/v1/', ''))
+      console.error('URL: ' + url.replace(rootURL + '/api/v1/', '') + videoId)
       console.error('The response of our server is:')
       let text = await response.text()
       if (text.length > 20) text = text.substring(0, 20) + '...'
@@ -998,7 +998,7 @@ const loadUnknown = async (videoId) => {
       console.error('❌ Server Error')
       console.error('http status:' + response.status)
       console.error('http status text:' + response.statusText)
-      console.error('URL: ' + url.replace(rootURL + '/api/v1/', ''))
+      console.error('URL: ' + url.replace(rootURL + '/api/v1/', '') + videoId)
       console.error('The response of our server is:')
       let text = await response.text()
       if (text.length > 20) text = text.substring(0, 20) + '...'
@@ -1044,7 +1044,7 @@ const loadKnown = async (videoId) => {
       console.error('❌ Server Error')
       console.error('http status:' + response.status)
       console.error('http status text:' + response.statusText)
-      console.error('URL: ' + url.replace(rootURL + '/api/v1/', ''))
+      console.error('URL: ' + url.replace(rootURL + '/api/v1/', '') + videoId)
       console.error('The response of our server is:')
       let text = await response.text()
       if (text.length > 20) text = text.substring(0, 20) + '...'
