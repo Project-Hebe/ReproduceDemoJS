@@ -122,19 +122,19 @@ const fetchToken = async () => {
 }
 
 const enterVideoPage = async (videoId) => {
-  // loadVideoInfoAndTranscript(videoId)
+  loadVideoInfoAndTranscript(videoId)
   loadVideoTranslation(videoId)
-  // loadQuizRecipe(videoId)
-  // loadQuizType0or1(videoId, 0)
-  // loadQuizType0or1(videoId, 1)
-  // loadQuizType2(videoId)
-  // loadQuizType3(videoId)
-  // loadKnown(videoId)
-  // loadUnknown(videoId)
-  // genQuizByGivenType(videoId, 0)
-  // genQuizByGivenType(videoId, 1)
-  // genQuizByGivenType(videoId, 2)
-  // genQuizByGivenType(videoId, 3)
+  loadQuizRecipe(videoId)
+  loadQuizType0or1(videoId, 0)
+  loadQuizType0or1(videoId, 1)
+  loadQuizType2(videoId)
+  loadQuizType3(videoId)
+  loadKnown(videoId)
+  loadUnknown(videoId)
+  genQuizByGivenType(videoId, 0)
+  genQuizByGivenType(videoId, 1)
+  genQuizByGivenType(videoId, 2)
+  genQuizByGivenType(videoId, 3)
 }
 
 const genQuizByGivenType = async (videoId, type) => {
